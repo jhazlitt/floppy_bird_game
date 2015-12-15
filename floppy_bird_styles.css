@@ -1,0 +1,16 @@
+#game {
+	height: 600px;
+	width: 600px;
+	background-color: blue;
+	margin: auto;
+	position: relative;
+}
+
+#bird {
+	top: 0px;
+	left: 285px;
+	height: 30px;
+	width: 30px;
+	background-color: red;
+	position: relative;
+}
