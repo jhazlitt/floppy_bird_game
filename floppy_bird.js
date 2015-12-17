@@ -9,7 +9,7 @@ $(document).ready(moveBird);
 
 function moveBird(){
 	$(document).keydown(function(evt) {
-		if (evt.keyCode === 32) {
+		if ((evt.keyCode === 32) || (evt.keyCode === 38)) {
 			if (birdAltitude - 100 >= 0) {
 				$('#bird').stop();
 				totalRotatedDegrees = 0;
@@ -107,4 +107,7 @@ function gameOver(){
 	clearInterval(collisionDetection);
 	clearInterval(birdInterval);
 	$('#game').append('<div id="game_over_message"><b>GAME OVER</b></div>');
+	$('#game_over_message').click(function(){
+		location.reload();
+	});
 }
