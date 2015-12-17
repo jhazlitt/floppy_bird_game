@@ -2,22 +2,12 @@ var velocity = 1;
 var birdAltitude = 10;
 var totalRotatedDegrees = 0;
 var score = 0;
+var towerBottomTop;
+var towerTopHeight;
 
 $(document).ready(moveBird);
 
 function moveBird(){
-	generateTowers();
-
-	moveLeft('#towerBottom1');
-	moveLeft('#towerTop1');
-
-	setInterval(function(){
-		generateTowers();
-		moveLeft('#towerBottom1');
-		moveLeft('#towerTop1');
-	}, 7100);
-
-
 	$(document).keydown(function(evt) {
 		if (evt.keyCode === 32) {
 			if (birdAltitude - 100 >= 0) {
@@ -30,13 +20,26 @@ function moveBird(){
 		}
 	});
 
-	setInterval(function(){
-		$('#ground').html("<h1>Score: " + score + "</h1>");
+	generateTowers();
+
+	moveLeft('#towerBottom1');
+	moveLeft('#towerTop1');
+
+	towerSpawner = setInterval(function(){
+		generateTowers();
+		moveLeft('#towerBottom1');
+		moveLeft('#towerTop1');
+		score += 1;
+	}, 7100);
+
+	collisionDetection = setInterval(function(){
+		$('#ground').html("<h1>SCORE: " + score + "</h1>");
 		birdAltitude = $('#bird').position().top;	
 
 		if (birdAltitude >= 540) {
 			$('#bird').stop();
 			$('#bird').hide();
+			gameOver();
 		}
 		else if (birdAltitude < -5) {
 			totalRotatedDegrees = 0;
@@ -44,9 +47,16 @@ function moveBird(){
 			$('#bird').stop();
 			$('#bird').css( "top" , "0px" );
 		}
+		var towerTopLeft = $('#towerTop1').position().left;
+		if ((birdAltitude <= towerTopHeight) && (towerTopLeft <= 300) && ((towerTopLeft + 100) >= 300)){
+			gameOver();
+		}
+		else if ((birdAltitude >= towerBottomTop) && (towerBottomLeft <= 300) && ((towerBottomLeft + 100) >= 300)){
+			gameOver();
+		}
 	},1);
 	
-	setInterval(function(){
+	birdInterval = setInterval(function(){
 			if (totalRotatedDegrees < 90) {
 				totalRotatedDegrees += 5;
 			}
@@ -80,7 +90,7 @@ function generateTowers(){
 	totalTowerHeight = 540 - openingWidth;
 
 	towerBottomHeight = Math.floor(Math.random() * totalTowerHeight) + 10;
-	towerTopHeight = totalTowerHeight - towerBottomHeight + 10;
+	towerTopHeight = totalTowerHeight - towerBottomHeight + 20;
 	
 	towerBottomTop = 540 - towerBottomHeight;
 
@@ -88,3 +98,13 @@ function generateTowers(){
 	$('#towerTop1').css({"top": "0px", "left": "600px", "height": "" + towerTopHeight + "px", "width": "0px"});
 }
 
+function gameOver(){
+	$('#bird').finish();
+	$('#bird').hide();
+	$('#towerTop1').finish();
+	$('#towerBottom1').finish();
+	clearInterval(towerSpawner);
+	clearInterval(collisionDetection);
+	clearInterval(birdInterval);
+	$('#game').append('<div id="game_over_message"><b>GAME OVER</b></div>');
+}
