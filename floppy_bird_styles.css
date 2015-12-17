@@ -12,5 +12,23 @@
 	height: 30px;
 	width: 30px;
 	background-color: red;
-	position: relative;
+	position: absolute;
+}
+
+#ground {
+	top: 540px;
+	height: 60px;
+	width: 600px;
+	background-color: gray;
+	position: absolute;
+	text-align: center;
+}
+
+.tower {
+	top: 440px;
+	left: 600px; 
+	height: 100px;
+	width: 0px;
+	background-color: purple;
+	position: absolute;
 }
