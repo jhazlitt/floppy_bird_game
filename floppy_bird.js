@@ -102,7 +102,7 @@ function moveLeft(ID){
 function generateTowers(){
 	var openingWidth = "";
 	if (score <= 200){
-		openingWidth = 200 + (200 - score);
+		openingWidth = 200 + (200 - 2 * score);
 	}
 	else {
 		openingWidth = 200;
