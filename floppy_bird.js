@@ -126,7 +126,7 @@ function gameOver(){
 	clearInterval(towerSpawner);
 	clearInterval(collisionDetection);
 	clearInterval(birdInterval);
-	$('#game').append('<div id="game_over_message"><b>GAME OVER</b></div>');
+	$('#game').append('<div id="game_over_message"><h1><b>GAME OVER</b></h1><h2>CLICK TO RESTART</h2></div>');
 	$('#game_over_message').click(function(){
 		location.reload();
 	});
