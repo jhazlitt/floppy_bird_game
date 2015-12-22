@@ -4,10 +4,30 @@ var totalRotatedDegrees = 0;
 var score = 0;
 var towerBottomTop;
 var towerTopHeight;
+var gamePlaying = false;
 
-$(document).ready(moveBird);
+$(document).ready(welcomeScreen);
 
-function moveBird(){
+function welcomeScreen(){
+	$(document).keydown(function(evt) {
+		if (!gamePlaying && (evt.keyCode === 13)) {
+			setupGame();
+		}
+	});
+
+	$('#welcome_screen').click(setupGame);
+}
+
+function setupGame(){
+	$('#welcome_screen').hide();
+	$('#game').append('<div id="bird"></div>');
+	$('#game').append('<div class="tower" id="towerBottom1"></div>');
+	$('#game').append('<div class="tower" id="towerTop1"></div>');
+	gamePlaying = true;
+	playGame();
+}
+
+function playGame(){
 	$(document).keydown(function(evt) {
 		if ((evt.keyCode === 32) || (evt.keyCode === 38)) {
 			if (birdAltitude - 100 >= 0) {
